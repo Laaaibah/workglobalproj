@@ -393,6 +393,7 @@ const seekerPlans  = content.pricing['job-seeker'];
 
 <script>
   function setupPricing() {
+    const normalizeRole = (value: string | null | undefined) => value === 'organisation' ? 'organization' : value;
     const sections: Record<string, HTMLElement | null> = {
       'job-seeker':   document.getElementById('js-pricing'),
       'organization': document.getElementById('org-pricing'),
@@ -403,9 +404,9 @@ const seekerPlans  = content.pricing['job-seeker'];
     let role: 'job-seeker' | 'organization' = 'job-seeker';
     try {
       // Prefer explicit role from URL hash (e.g. /pricing#organization) or query (?role=organization)
-      const hashRole = window.location.hash.replace('#', '');
+      const hashRole = normalizeRole(window.location.hash.replace('#', ''));
       const params = new URLSearchParams(window.location.search);
-      const queryRole = params.get('role');
+      const queryRole = normalizeRole(params.get('role'));
       if (hashRole === 'organization' || hashRole === 'job-seeker') {
         role = hashRole as any;
       } else if (queryRole === 'organization' || queryRole === 'job-seeker') {
@@ -413,12 +414,14 @@ const seekerPlans  = content.pricing['job-seeker'];
       } else {
         const raw = localStorage.getItem('wg-user-role');
         if (raw) {
-          if (raw === 'job-seeker' || raw === 'organization') {
-            role = raw as any;
+          const normalizedRaw = normalizeRole(raw);
+          if (normalizedRaw === 'job-seeker' || normalizedRaw === 'organization') {
+            role = normalizedRaw as any;
           } else {
             const parsed = JSON.parse(raw);
-            if (parsed?.role === 'job-seeker' || parsed?.role === 'organization') {
-              role = parsed.role;
+            const normalizedParsedRole = normalizeRole(parsed?.role);
+            if (normalizedParsedRole === 'job-seeker' || normalizedParsedRole === 'organization') {
+              role = normalizedParsedRole as any;
             }
           }
         }
@@ -435,7 +438,7 @@ const seekerPlans  = content.pricing['job-seeker'];
 
     // React to URL hash changes so footer links always switch the visible pricing section
     window.addEventListener('hashchange', () => {
-      const hashRole = window.location.hash.replace('#', '');
+      const hashRole = normalizeRole(window.location.hash.replace('#', ''));
       if (hashRole === 'organization' || hashRole === 'job-seeker') {
         setRole(hashRole as any);
       }

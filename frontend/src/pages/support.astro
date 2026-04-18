@@ -394,7 +394,25 @@ const contactApiUrl = import.meta.env.PUBLIC_CONTACT_API_URL || 'http://localhos
     <script is:inline>
       (() => {
         const gateKey = 'wg-user-role';
-        const role = window.localStorage.getItem(gateKey);
+        const normalizeRole = (value) => value === 'organisation' ? 'organization' : value;
+        let role = 'job-seeker';
+        try {
+          const raw = window.localStorage.getItem(gateKey);
+          if (raw) {
+            const normalizedRaw = normalizeRole(raw);
+            if (normalizedRaw === 'job-seeker' || normalizedRaw === 'organization') {
+              role = normalizedRaw;
+            } else {
+              const parsed = JSON.parse(raw);
+              const normalizedParsedRole = normalizeRole(parsed?.role);
+              if (normalizedParsedRole === 'job-seeker' || normalizedParsedRole === 'organization') {
+                role = normalizedParsedRole;
+              }
+            }
+          }
+        } catch (e) {
+          // Keep default role when localStorage payload is malformed.
+        }
         const job = document.getElementById('faq-job');
         const org = document.getElementById('faq-org');
 

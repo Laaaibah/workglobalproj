@@ -47,7 +47,7 @@ const { title, navActive = 'home' } = Astro.props;
         </div>
         <div class="entry-gate-actions">
           <button type="button" class="entry-role-btn" data-role="job-seeker">Job Seeker</button>
-          <button type="button" class="entry-role-btn" data-role="organisation">Organisation</button>
+          <button type="button" class="entry-role-btn" data-role="organization">Organisation</button>
         </div>
       </div>
     </div>
@@ -218,17 +218,36 @@ const { title, navActive = 'home' } = Astro.props;
         const gateKey = 'wg-user-role';
         const expiryMs = 10 * 60 * 1000; // 10 minutes
 
+        const normalizeRole = (role) => {
+          if (role === 'organisation') return 'organization';
+          return role;
+        };
+
         const readStored = () => {
+          const isValidRole = (role) => role === 'job-seeker' || role === 'organization';
           try {
             const raw = window.localStorage.getItem(gateKey);
-            return raw ? JSON.parse(raw) : null;
+            if (!raw) return null;
+
+            // Backward compatibility: previous pages may have stored plain strings.
+            const plainRole = normalizeRole(raw);
+            if (isValidRole(plainRole)) return { role: plainRole, ts: null };
+
+            const parsed = JSON.parse(raw);
+            if (typeof parsed === 'string') {
+              const parsedRole = normalizeRole(parsed);
+              return isValidRole(parsedRole) ? { role: parsedRole, ts: null } : null;
+            }
+
+            const parsedRole = normalizeRole(parsed?.role);
+            return isValidRole(parsedRole) ? { role: parsedRole, ts: parsed?.ts ?? null } : null;
           } catch (e) {
             return null;
           }
         };
 
         const writeStored = (role) => {
-          const payload = { role, ts: Date.now() };
+          const payload = { role: normalizeRole(role), ts: Date.now() };
           try {
             window.localStorage.setItem(gateKey, JSON.stringify(payload));
           } catch (e) {

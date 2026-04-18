@@ -236,15 +236,18 @@ const appStoreBadge = "https://tools.applemediaservices.com/api/badges/download-
   function applyHomepageRole() {
     const roleKey = 'wg-user-role';
     let role = 'job-seeker';
+    const normalizeRole = (value) => value === 'organisation' ? 'organization' : value;
     try {
       const raw = localStorage.getItem(roleKey);
       if (raw) {
-        if (raw === 'job-seeker' || raw === 'organization') {
-          role = raw;
+        const normalizedRaw = normalizeRole(raw);
+        if (normalizedRaw === 'job-seeker' || normalizedRaw === 'organization') {
+          role = normalizedRaw;
         } else {
           const parsed = JSON.parse(raw);
-          if (parsed?.role === 'job-seeker' || parsed?.role === 'organization') {
-            role = parsed.role;
+          const normalizedParsedRole = normalizeRole(parsed?.role);
+          if (normalizedParsedRole === 'job-seeker' || normalizedParsedRole === 'organization') {
+            role = normalizedParsedRole;
           }
         }
       }
