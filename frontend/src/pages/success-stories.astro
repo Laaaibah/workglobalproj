@@ -1,0 +1,436 @@
+---
+import Layout from '../layouts/Layout.astro';
+import bgImage from '../assets/background.png?url';
+import SuccessStoryCard from '../components/SuccessStoryCard.astro';
+import id1 from '../assets/id1.png?url';
+import id2 from '../assets/id2.png?url';
+import id3 from '../assets/id3.png?url';
+import ahmedAliAudio from '../audios/ahmedali.mpeg?url';
+import ayeshaKhanAudio from '../audios/ayeshakhan.mpeg?url';
+import sanaMalikAudio from '../audios/sanamalik.mpeg?url';
+import hiraAnwarAudio from '../audios/hiranawar.mpeg?url';
+
+const stories = [
+  {
+    image: id1,
+    tag: '',
+    title: 'Ali Ahmed - Founder & CEO',
+    description: "'From a GIKI dropout to building something of his own.'",
+    imagePosition: 'center 16%',
+    vmSrc: ahmedAliAudio,
+    storyText: `"From a GIKI dropout to building something of my own."
+
+Every kid grows up dreaming of becoming something.
+I didn't.
+Or maybe I did I just never had the clarity to put it into words. All I knew was that I wanted something. Something bigger, something of my own. I just didn't know what it looked like.
+I got into GIKI which, for most people around me, was already a big achievement. It felt like I was on the "right path."
+But two years into my engineering degree, I knew something wasn't right.
+I would sit in lectures, surrounded by people who seemed certain about their future, while I felt completely disconnected. It wasn't that I couldn't do it I just didn't want to. And that realization was terrifying.
+Dropping out wasn't a bold decision at the time it felt like failure.
+The questions started immediately. From family, from relatives, from everyone:
+"What are you going to do now?"
+The truth was... I didn't know.
+
+Around that time, I used to visit a friend who was into freelancing mostly website development and small tech projects. Every time I went over, he'd show me something new he had built.
+One day, I asked him, "Can you teach me this?"
+That was the start.
+
+In the beginning, it was confusing. Lines of code that didn't make sense, errors I couldn't fix, and hours spent stuck on the smallest problems. But there was something different about it I didn't feel forced.
+I started enjoying the process. The independence. The creativity. The fact that I could build something and actually see it come to life.
+Slowly, without even realizing it, I started falling in love with tech.
+
+I took on small freelance projects the kind no one really talks about. Low payments, difficult clients, sometimes no payment at all. There were days I questioned everything again.
+I remember one particular month no projects, no income. Just me, my laptop, and constant doubt.
+That was my lowest point.
+
+But something in me didn't want to go back.
+Instead of quitting, I decided to take it seriously. I improved my skills, built a proper portfolio, reached out to clients instead of waiting for them, and started treating freelancing like a business not just survival.
+It didn't change overnight.
+But slowly, things shifted.
+
+One client turned into two. Two turned into referrals. Work became consistent. And for the first time, I felt like I was building something real.
+The turning point came when I had more work than I could handle alone.
+That's how it started.
+
+Today, I run a growing tech company, working with clients across different parts of the world.
+I didn't have a clear dream growing up.
+I didn't follow a straight path.
+But I kept going until something finally felt right.
+And sometimes, that's all it takes.`,
+    cardColor: '#9ecbf0',
+  },
+  {
+    image: id2,
+    tag: '',
+    title: 'Ayesha Khan - Head of Design',
+    description: "'From resisting expectations to designing a life of her own.'",
+    imagePosition: 'center 14%',
+    vmSrc: ayeshaKhanAudio,
+    storyText: `"From resisting expectations to designing a life of my own."
+
+Every child is told who they should become.
+A doctor. An engineer. Something "respectable."
+For me, it was always the same answer doctor.
+Not because I said it.
+Because everyone else did.
+
+Family gatherings felt like interviews.
+"What subjects are you taking?"
+"Pre-med, right?"
+"You'll make such a great doctor."
+
+And somewhere along the way, their voices became louder than my own.
+But the truth was... I never saw myself there.
+What I did see, though, was color.
+Layouts. Sketches in the margins of my notebooks.
+Redesigning posters, Instagram pages, random brands just for fun.
+
+I got into college on the pre-med track anyway.
+Because saying no felt harder than saying yes.
+The first few months were heavy.
+Not because the work was difficult but because it didn't feel like mine.
+
+I would sit in biology lectures while secretly watching design tutorials at night.
+Daytime: expectations.
+Nighttime: curiosity.
+
+One day, I came across a design project online a complete brand identity someone had built from scratch.
+And I remember thinking,
+"This is it. This is what I want to do."
+
+That realization didn't feel exciting at first.
+It felt terrifying.
+Because wanting something different meant disappointing people.
+
+When I finally told my family, the reaction was exactly what I expected.
+Confusion. Silence. Concern.
+"Design? What does that even mean?"
+"Why would you leave medicine for this?"
+"Is there even a future in it?"
+
+For a moment, I almost believed them.
+But this time... I didn't go back.
+
+I switched paths quietly.
+Started learning design properly not just as a hobby, but as a skill.
+The beginning wasn't glamorous.
+Free tools. Online tutorials. Copying designs just to understand how things worked.
+My first projects? Unpaid.
+
+Slowly, things started shifting.
+One client said yes.
+Then another.
+Then someone referred me to someone else.
+
+The turning point came when I was offered a full-time role as a junior designer.
+From there, everything accelerated.
+More experience. Better projects. Bigger clients.
+And eventually... leadership.
+
+Today, I lead a design team.
+This story was never about proving people wrong.
+It was about finally listening to myself.`,
+    cardColor: '#b9e3a6',
+  },
+  {
+    image: id3,
+    tag: '',
+    title: 'Sana Malik - Event Organizer',
+    description: "'From being overlooked to creating moments no one forgets.'",
+    imagePosition: 'center 12%',
+    vmSrc: sanaMalikAudio,
+    storyText: `"From being overlooked to creating moments no one forgets."
+
+I wasn't the "top student." Not the one teachers remembered.
+I was always just... there.
+Average grades. Quiet opinions.
+And over time, you start believing that about yourself.
+
+So I never really had a dream.
+No clear answer when people asked,
+"What do you want to become?"
+
+What I did have, though, was a strange habit.
+I noticed details.
+At family weddings, I wasn't focused on the stage.
+I was looking at the decor. The lighting. The movement.
+
+After college, pressure started building.
+"Apply somewhere."
+"Do something stable."
+
+So I took an admin role.
+It was fine. Not bad. Not great.
+Just... fine.
+
+The shift started small.
+A cousin's engagement.
+They needed help, so I coordinated vendors and fixed last-minute issues.
+That night, something felt different.
+I wasn't tired. I was alive.
+
+People noticed.
+"You handled that really well."
+"You should do this more often."
+
+I started helping at events on weekends.
+Assisting planners. Taking tiny projects.
+Long hours. Last-minute chaos.
+But even on hard days, I felt ownership.
+
+Slowly, I got my own clients.
+Birthdays. Engagements. Small gatherings.
+Every event taught me pressure management, client handling, and recovery when everything goes wrong.
+
+The turning point came with my first large wedding.
+It terrified me.
+But when everything flowed and came together, I stood there and thought:
+"I did this."
+
+Today, I run events that people remember.
+I was never the obvious choice.
+But I cared enough to do it right.
+And in the end, that was enough.`,
+    cardColor: '#f5c7a4',
+  },
+  {
+    image: id1,
+    tag: '',
+    title: 'Hira Anwar - Makeup Artist',
+    description: "'From being told it is just a hobby to building trusted work for milestone days.'",
+    imagePosition: 'center 22%',
+    vmSrc: hiraAnwarAudio,
+    storyText: `"From being told it's just a hobby to building something people trust with their biggest days."
+
+I was never taken seriously.
+"Makeup? That's just for fun."
+"It's not a career."
+
+But for me, it was never just makeup.
+It was the only thing I could do for hours without feeling tired.
+
+After college, I did what was expected.
+I applied for office jobs and ended up in a front desk role.
+From outside, it looked respectable.
+Inside, I felt disconnected.
+
+The shift came from a random opportunity.
+A friend's makeup artist cancelled before her engagement.
+Someone said, "Hira can do it."
+
+I was terrified.
+But I said yes.
+Bad lighting. Limited products. No backup plan.
+My hands were shaking.
+
+When she saw herself in the mirror, she smiled for real.
+That moment changed everything.
+
+I did not quit my job immediately.
+I started small.
+Weekend bookings.
+Low charges.
+Sometimes no charges.
+
+There were cancellations, comparisons, and doubt.
+But there were also referrals, gratitude, and trust.
+
+I invested in better products and proper learning.
+Skin types, tones, styles not just trends.
+
+The turning point came with my first proper bridal booking.
+Not through a favor.
+Because someone chose me.
+
+Today, this is what I do full-time.
+Weddings. Events. Clients who once felt out of reach.
+I did not have a perfect plan.
+Just something I cared about enough to keep going.
+And in the end, that made all the difference.`,
+    cardColor: '#d9c2f1',
+  },
+];
+---
+
+<Layout title="Success Stories - WorkGlobal" navActive="home">
+  <style define:vars={{ bgImage: `url(${bgImage})` }}>
+    .bg-layer {
+      position: fixed;
+      inset: 0;
+      background-image: var(--bgImage);
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    .stories-page {
+      min-height: 100vh;
+      padding: clamp(150px, 16vw, 200px) 0 70px;
+    }
+
+    .stories-head {
+      width: min(1200px, 92vw);
+      margin: 0 auto 24px;
+      padding: 0 8px;
+      text-align: center;
+    }
+
+    .stories-head h1 {
+      margin: 0;
+      color: #053f5c;
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 900;
+      letter-spacing: -0.02em;
+    }
+
+    .stories-stack {
+      width: 100%;
+      position: relative;
+      padding-bottom: clamp(140px, 18vh, 260px);
+    }
+
+    /* Extra runway so the last sticky card releases before footer enters */
+    .stories-stack::after {
+      content: '';
+      display: block;
+      height: clamp(140px, 20vh, 280px);
+    }
+
+    .story-step {
+      position: relative;
+      height: min(96vh, 760px);
+    }
+
+    .story-step:last-child {
+      height: min(112vh, 920px);
+    }
+
+    .story-pin {
+      position: sticky;
+      top: clamp(116px, 11vw, 150px);
+      display: flex;
+      justify-content: center;
+      z-index: calc(40 + var(--i));
+      opacity: 0;
+      transform: translateY(64px) scale(0.94);
+      transition: transform 560ms cubic-bezier(0.2, 0.86, 0.22, 1), opacity 420ms ease, filter 420ms ease;
+      transition-delay: calc(var(--i) * 40ms);
+      will-change: transform, opacity, filter;
+    }
+
+    .story-pin.is-in {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+
+    .story-pin.is-past {
+      opacity: 1;
+      transform: translateY(36px) scale(0.975);
+      filter: brightness(0.94) saturate(0.9);
+      box-shadow: 0 12px 30px rgba(6, 40, 56, 0.06);
+    }
+
+    @media (max-width: 900px) {
+      .stories-page {
+        padding-top: 150px;
+      }
+
+      .story-step {
+        height: min(88vh, 640px);
+      }
+
+      .story-step:last-child {
+        height: min(104vh, 760px);
+      }
+    }
+
+    @media (max-width: 640px) {
+      .stories-page {
+        padding-top: 138px;
+      }
+
+      .stories-head {
+        margin-bottom: 16px;
+      }
+
+      .story-step {
+        height: min(84vh, 560px);
+      }
+
+      .story-step:last-child {
+        height: min(96vh, 700px);
+      }
+
+      .story-pin {
+        top: 108px;
+      }
+    }
+  </style>
+
+  <div class="bg-layer" aria-hidden="true"></div>
+
+  <main class="stories-page">
+    <section class="stories-head">
+      <h1>Success Stories</h1>
+    </section>
+
+    <section class="stories-stack" aria-label="Success stories">
+      {stories.map((story, index) => (
+        <div class="story-step">
+          <div class="story-pin" style={`--i:${index};`}>
+            <SuccessStoryCard {...story} />
+          </div>
+        </div>
+      ))}
+    </section>
+  </main>
+</Layout>
+
+<script is:inline>
+  (() => {
+    let rafId = null;
+
+    const applyStackState = () => {
+      const steps = Array.from(document.querySelectorAll('.story-step'));
+      const pins = Array.from(document.querySelectorAll('.story-pin'));
+      if (!steps.length || !pins.length) return;
+
+      const triggerLine = window.innerHeight * 0.34;
+      let activeIndex = 0;
+
+      steps.forEach((step, index) => {
+        const top = step.getBoundingClientRect().top;
+        if (top <= triggerLine) activeIndex = index;
+      });
+
+      pins.forEach((pin, index) => {
+        pin.classList.remove('is-in', 'is-past');
+
+        if (index < activeIndex) {
+          pin.classList.add('is-in', 'is-past');
+        } else if (index === activeIndex) {
+          pin.classList.add('is-in');
+        }
+      });
+    };
+
+    const updateStackState = () => {
+      if (rafId) return;
+      rafId = window.requestAnimationFrame(() => {
+        applyStackState();
+        rafId = null;
+      });
+    };
+
+    const bind = () => {
+      updateStackState();
+      window.addEventListener('scroll', updateStackState, { passive: true });
+      window.addEventListener('resize', updateStackState);
+    };
+
+    document.addEventListener('astro:page-load', bind);
+    bind();
+  })();
+</script>

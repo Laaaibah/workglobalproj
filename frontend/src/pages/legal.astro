@@ -1,0 +1,388 @@
+---
+import Layout from '../layouts/Layout.astro';
+import bgImage from '../assets/background.png?url';
+
+const legalSections = [
+  {
+    navLabel: 'Introduction',
+    title: 'Terms and Conditions',
+    updated: 'Updated April 17, 2026',
+    heading: 'Introduction',
+    content: [
+      `These Terms and Conditions govern your access to and use of the Workglobal mobile application and website. The Platform is owned and operated by Resource Pool Group Ltd.`,
+      `By clicking "I Agree" when creating an account, you agree to be bound by these Terms and our Privacy Policy.`,
+    ],
+  },
+  {
+    navLabel: 'Global Operations',
+    title: 'Global Operations',
+    updated: 'Updated April 17, 2026',
+    heading: 'Global Operations and Cross-Border Platform',
+    content: [
+      `Workglobal is a borderless digital recruitment ecosystem. While our parent company is headquartered in the United Kingdom, we operate a global marketplace with significant operational hubs and physical offices located across Asia and within major international transportation hubs worldwide.`,
+      `By using the Platform, you acknowledge that your data, communications, and employment matches may cross international borders. We comply with international data protection frameworks, but it is your sole responsibility to ensure that your use of the Platform complies with your local laws, regulations, and employment standards.`,
+    ],
+  },
+  {
+    navLabel: 'Eligibility and Registration',
+    title: 'Eligibility and Account Registration',
+    updated: 'Updated April 17, 2026',
+    heading: 'Eligibility and Account Registration',
+    content: [
+      `To access the core features of Workglobal, you must register for an account as either a "Jobseeker" or an "Employer."`,
+      `Age Requirement: You must be at least eighteen (18) years of age to use this Platform. By creating an account, you legally warrant that you meet this age requirement.`,
+      `Account Accuracy: You agree to provide accurate, current, and complete information during the registration process. Employers must provide verifiable business details. Jobseekers must provide authentic representations of their skills, education, and work history.`,
+      `Account Security: You are strictly responsible for safeguarding your password and any other credentials used to access your account.`,
+    ],
+  },
+  {
+    navLabel: 'Ecosystem Affiliates',
+    title: 'Ecosystem Affiliates and Strategic Partners',
+    updated: 'Updated April 17, 2026',
+    heading: 'Ecosystem Affiliates and Strategic Partners',
+    content: [
+      `Workglobal operates within a wider corporate ecosystem. To provide a comprehensive professional experience, we partner with and share information alongside our parent company, Resource Pool Group Ltd, its subsidiaries, and trusted strategic partners.`,
+      `Corporate Subsidiaries: We may connect you with our subsidiaries, such as Hiredesk.services or Bilocation.`,
+      `Partner Services: Any engagement with our subsidiaries or third-party strategic partners is strictly subject to their respective terms of service and separate agreements.`,
+    ],
+  },
+  {
+    navLabel: 'Immigration or Legal Advice',
+    title: 'No Immigration or Legal Advice',
+    updated: 'Updated April 17, 2026',
+    heading: 'No Immigration or Legal Advice',
+    content: [
+      `Workglobal connects global talent with international opportunities; however, we are not a law firm, an immigration agency, or a visa consultancy.`,
+      `No Visa Sponsorship Facilitation: Matching with an international employer on the Platform does not guarantee visa sponsorship, work authorisation, or immigration success. Workglobal is entirely removed from the legal immigration process.`,
+      `Referral to Partners: Workglobal does not provide immigration advice. Should an international hire require cross border legal compliance, visa sponsorship, or Employer of Record services, we will only refer users to our corporate subsidiaries.`,
+      `User Responsibility: It is the sole responsibility of the Employer and the Jobseeker to ensure that any employment arrangement complies with all relevant local, national, and international labor and immigration laws. Workglobal disclaims all liability for any legal, financial, or immigration related issues arising from a match made on the Platform.`,
+    ],
+  },
+  {
+    navLabel: 'User Conduct',
+    title: 'User Conduct and Acceptable Use',
+    updated: 'Updated April 17, 2026',
+    heading: 'User Conduct and Acceptable Use',
+    content: [
+      `Workglobal maintains a professional, equitable, and highly efficient ecosystem. You agree NOT to engage in any of the following prohibited activities:`,
+      `The Anti-Ghosting Protocol: Workglobal is built on rapid communication. If an Employer or Jobseeker repeatedly matches and initiates chats but fails to respond for extended periods ("ghosting"), Workglobal reserves the right to algorithmically penalize the user’s profile visibility or suspend the account.`,
+      `Fraud and Misrepresentation: Creating fake profiles, posting fraudulent job listings, misrepresenting your qualifications, or impersonating another person or business entity is strictly prohibited and will result in immediate account termination.`,
+      `Data Scraping: You may not use automated scripts, bots, spiders, or scrapers to extract data, candidate profiles, or job listings from the Platform.`,
+      `Discrimination and Harassment: You may not use the Platform's messaging system to harass, abuse, or discriminate against any user based on race, gender, religion, national origin, disability, or sexual orientation.`,
+    ],
+  },
+  {
+    navLabel: 'Subscriptions & Payments',
+    title: 'Subscriptions, Fees, and Payments',
+    updated: 'Updated April 17, 2026',
+    heading: 'Subscriptions, Fees, and Payments',
+    content: [
+      `Workglobal offers both free and premium subscription tiers for users.`,
+      `Billing and Renewal: Premium subscriptions are billed on a recurring basis depending on your selected plan. By providing payment information, you authorize Workglobal (via our third-party payment processors) to charge the applicable fees automatically.`,
+      `No Refunds: All subscription fees, job posting credits, and in-app purchases are non-refundable. If you cancel your subscription, you will retain access to the premium features until the end of your current billing cycle.`,
+    ],
+  },
+  {
+    navLabel: 'Intellectual Property',
+    title: 'Intellectual Property Rights',
+    updated: 'Updated April 17, 2026',
+    heading: 'Intellectual Property Rights',
+    content: [
+      `Workglobal's IP: All content, design, graphics, algorithms, underlying code, and trademarks (including "Workglobal", "Swipe. Match. Work.", and the Workglobal logos) are the exclusive property of Resource Pool Group Ltd. You are granted a limited, non-exclusive, non-transferable license to use the Platform for its intended purpose.`,
+      `User Content: By uploading resumes, video interviews, job postings, or chat messages, you grant Workglobal a worldwide, royalty-free, and non-exclusive license to host, store, process, and display this content to facilitate the matchmaking services. You retain all ownership rights to your personal User Content.`,
+    ],
+  },
+  {
+    navLabel: 'Disclaimers & Liability',
+    title: 'Disclaimers and Limitation of Liability',
+    updated: 'Updated April 17, 2026',
+    heading: 'Disclaimers and Limitation of Liability',
+    content: [
+      `"As Is" Basis: The Platform is provided on an "as is" and "as available" basis without any warranties of any kind. Workglobal does not guarantee that the Platform will be uninterrupted or bug-free.`,
+      `Hiring Outcomes: Workglobal is a facilitator. We do not endorse any specific Employer or Jobseeker. We are not liable for the actions, omissions, or performance of any user. We do not guarantee the quality, safety, or legality of the jobs advertised, the truth or accuracy of user profiles, or the ability of employers to offer jobs to candidates.`,
+      `Cap on Liability: To the maximum extent permitted by law, Resource Pool Group Ltd, its directors, employees, and affiliates shall not be liable for any indirect, incidental, special, consequential, or punitive damages, including loss of profits, data, or career opportunities. In no event shall our total aggregate liability exceed the amount you paid to Workglobal in the six (6) months preceding the claim.`,
+    ],
+  },
+  {
+    navLabel: 'Indemnification',
+    title: 'Indemnification',
+    updated: 'Updated April 17, 2026',
+    heading: 'Indemnification',
+    content: [
+      `You agree to defend, indemnify, and hold harmless Workglobal, Resource Pool Group Ltd, and its officers, directors, employees, and agents, from and against any and all claims, damages, obligations, losses, liabilities, costs, or debt, and arising from: (a) your use of and access to the Platform; (b) your violation of any term of these Terms; (c) your violation of any third-party right, including without limitation any copyright, property, or privacy right; or (d) any claim that your User Content caused damage to a third party.`,
+    ],
+  },
+  {
+    navLabel: 'Account Termination',
+    title: 'Account Termination',
+    updated: 'Updated April 17, 2026',
+    heading: 'Account Termination',
+    content: [
+      `Termination by You: You may terminate your account at any time via the app settings.`,
+      `Termination by Us: We reserve the right to suspend or terminate your account immediately, without prior notice or liability, for any reason whatsoever, including without limitation if you breach the Terms.`,
+    ],
+  },
+  {
+    navLabel: 'Governing Law',
+    title: 'Governing Law and Jurisdiction',
+    updated: 'Updated April 17, 2026',
+    heading: 'Governing Law and Jurisdiction',
+    content: [
+      `These Terms shall be governed and construed in accordance with the laws of England and Wales, without regard to its conflict of law provisions.`,
+      `Any dispute arising out of or in connection with these Terms shall be subject to the exclusive jurisdiction of the courts of London, United Kingdom. Due to our global operations, we reserve the right to seek injunctive relief in any jurisdiction where we deem it necessary to protect our intellectual property or operational security.`,
+    ],
+  },
+  {
+    navLabel: 'Contact Us',
+    title: 'Contact Us',
+    updated: 'Updated April 17, 2026',
+    heading: 'Contact Us',
+    content: [
+      `If you have any questions about these Terms, please contact our legal team:`,
+      `Resource Pool Group Ltd`,
+      `71-75 Shelton Street, Covent Garden, London, United Kingdom, WC2H 9JQ`,
+      `Email: legal@workglobal.ai`,
+    ],
+  },
+];
+---
+
+<Layout title="Terms and Conditions" navActive="">
+  <div class="bg-layer" aria-hidden="true" style="background-image:var(--bgImage)"></div>
+
+  <main class="legal-page">
+    <aside class="legal-nav" aria-label="Terms topics">
+      <ul>
+        {legalSections.map((section, index) => (
+          <li>
+            <button
+              class={`legal-nav-btn${index === 0 ? ' is-active' : ''}`}
+              data-tab={index}
+              aria-controls={`panel-${index}`}
+              aria-selected={index === 0 ? 'true' : 'false'}
+              type="button"
+            >
+              <span class="dot">{index + 1}</span>
+              <span>{section.navLabel}</span>
+            </button>
+          </li>
+        ))}
+      </ul>
+    </aside>
+
+    <section class="legal-content-wrap">
+      {legalSections.map((section, index) => (
+        <article
+          id={`panel-${index}`}
+          class={`legal-panel${index === 0 ? ' is-active' : ''}`}
+          data-panel={index}
+          hidden={index !== 0}
+        >
+          <h1>{section.title}</h1>
+          <p class="updated">{section.updated}</p>
+          <h2>{section.heading}</h2>
+          {section.content.map((item) => <p>{item}</p>)}
+        </article>
+      ))}
+      <footer class="legal-footer">Last updated: April 17, 2026</footer>
+    </section>
+  </main>
+
+  <style define:vars={{ bgImage: `url(${bgImage})` }}>
+    .bg-layer {
+      position: fixed;
+      inset: 0;
+      background-image: var(--bgImage);
+      background-size: cover;
+      background-position: center;
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    .legal-page {
+      width: min(1080px, 92vw);
+      margin: clamp(80px, 10vw, 140px) auto clamp(30px, 4vw, 50px);
+      background: #86C5FF;
+      border: 1px solid rgba(22, 43, 67, 0.08);
+      border-radius: 12px;
+      box-shadow: 0 20px 50px rgba(5, 63, 92, 0.15);
+      display: grid;
+      grid-template-columns: minmax(220px, 30%) 1fr;
+      overflow: hidden;
+    }
+
+    .legal-nav {
+      background: #e6edf0;
+      border-right: 1px solid rgba(22, 43, 67, 0.08);
+      padding: 22px 14px;
+    }
+
+    .legal-nav ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: grid;
+      gap: 10px;
+    }
+
+    .legal-nav-btn {
+      width: 100%;
+      border: 0;
+      background: transparent;
+      text-align: left;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 8px;
+      color: #6c8d95;
+      font-size: 1rem;
+      font-weight: 700;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.2s ease, color 0.2s ease;
+    }
+
+    .legal-nav-btn .dot {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.78rem;
+      font-weight: 800;
+      background: #b6e7ea;
+      color: #1a6b75;
+      flex-shrink: 0;
+    }
+
+    .legal-nav-btn.is-active,
+    .legal-nav-btn:hover {
+      color: #053F5C;
+      background: rgba(5, 63, 92, 0.06);
+    }
+
+    .legal-content-wrap {
+      padding: clamp(24px, 3vw, 38px);
+      background: transparent;
+    }
+
+    .legal-panel {
+      color: #053F5C;
+      line-height: 1.7;
+      opacity: 0;
+      transform: translateY(8px);
+      transition: opacity 0.24s ease, transform 0.24s ease;
+    }
+
+    .legal-panel.is-active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .legal-panel h1 {
+      margin: 0;
+      color: #053F5C;
+      font-size: clamp(2rem, 3vw, 2.5rem);
+      letter-spacing: 0.01em;
+    }
+
+    .updated {
+      margin: 4px 0 18px;
+      color: #a2a5aa;
+      font-weight: 700;
+      font-size: 0.95rem;
+    }
+
+    .legal-panel h2 {
+      margin: 0 0 10px;
+      color: #053F5C;
+      font-size: 1.5rem;
+      border-bottom: 1px solid rgba(5,63,92,0.12);
+      padding-bottom: 6px;
+    }
+
+    .legal-panel p {
+      margin: 0 0 14px;
+      color: #053F5C;
+      font-weight: 600;
+    }
+
+    .legal-footer {
+      margin-top: 18px;
+      padding-top: 12px;
+      border-top: 1px solid rgba(90, 95, 102, 0.2);
+      color: #8f949a;
+      font-size: 0.9rem;
+      font-weight: 700;
+    }
+
+    @media (max-width: 860px) {
+      .legal-page {
+        grid-template-columns: 1fr;
+      }
+
+      .legal-nav {
+        border-right: 0;
+        border-bottom: 1px solid rgba(22, 43, 67, 0.08);
+      }
+
+      .legal-nav ul {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 580px) {
+      .legal-page {
+        width: min(96vw, 1080px);
+      }
+
+      .legal-nav ul {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+
+  <script is:inline>
+    (() => {
+      const setupTabs = () => {
+        const buttons = Array.from(document.querySelectorAll('.legal-nav-btn'));
+        const panels = Array.from(document.querySelectorAll('.legal-panel'));
+        if (!buttons.length || !panels.length) return;
+
+        const activateTab = (tabIndex) => {
+          buttons.forEach((btn, idx) => {
+            const active = idx === tabIndex;
+            btn.classList.toggle('is-active', active);
+            btn.setAttribute('aria-selected', active ? 'true' : 'false');
+          });
+
+          panels.forEach((panel, idx) => {
+            const active = idx === tabIndex;
+            panel.classList.toggle('is-active', active);
+            panel.hidden = !active;
+          });
+
+          // Smooth-scroll the activated panel to the top of the visible card area
+          const target = panels[tabIndex];
+          if (target) {
+            // small timeout to allow layout/visibility changes to take effect
+            setTimeout(() => {
+              const topOffset = 12; // px gap from top
+              const rect = target.getBoundingClientRect();
+              const absoluteTop = window.scrollY + rect.top - topOffset;
+              window.scrollTo({ top: absoluteTop, behavior: 'smooth' });
+            }, 60);
+          }
+        };
+
+        buttons.forEach((btn, idx) => {
+          btn.addEventListener('click', () => activateTab(idx));
+        });
+      };
+
+      document.addEventListener('astro:page-load', setupTabs);
+      setupTabs();
+    })();
+  </script>
+</Layout>

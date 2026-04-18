@@ -1,0 +1,41 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    @apply m-0 p-0 box-border;
+  }
+  
+  html {
+    @apply scroll-smooth;
+  }
+  
+  body {
+    @apply bg-white text-gray-900;
+    font-family: 'Inter', sans-serif;
+    letter-spacing: -0.5px;
+  }
+
+  .bg-layer {
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100dvh;
+    min-height: 100vh;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+  }
+
+  @media (max-width: 1024px), (hover: none), (pointer: coarse) {
+    .bg-layer {
+      background-attachment: scroll !important;
+      background-position: center top !important;
+      background-size: cover !important;
+    }
+  }
+}
+

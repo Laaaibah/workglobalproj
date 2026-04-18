@@ -1,0 +1,242 @@
+---
+import '../styles/global.css';
+import Footer from '../components/Footer.astro';
+import Navbar from '../components/navbar.astro';
+import logoIcon from '../assets/logo icon hi.png?url';
+import { ViewTransitions } from 'astro:transitions';
+
+interface Props {
+  title: string;
+  navActive?: 'home' | 'about' | 'pricing' | 'support';
+}
+
+const { title, navActive = 'home' } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="description" content="WorkGlobal - Swipe. Match. Work" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>{title}</title>
+    <ViewTransitions />
+    <script>
+      import AOS from 'aos';
+      import 'aos/dist/aos.css';
+      
+      document.addEventListener('DOMContentLoaded', () => {
+        AOS.init({
+          duration: 1000,
+          easing: 'ease-in-out',
+          once: false,
+        });
+      });
+    </script>
+  </head>
+  <body class="flex flex-col min-h-screen">
+    <div id="entry-gate" class="entry-gate" role="dialog" aria-modal="true" aria-labelledby="entry-gate-title">
+      <div class="entry-gate-card">
+        <div class="entry-gate-logo-wrap">
+          <img src={logoIcon} alt="WorkGlobal icon" class="entry-gate-logo" />
+        </div>
+        <div class="entry-gate-actions">
+          <button type="button" class="entry-role-btn" data-role="job-seeker">Job Seeker</button>
+          <button type="button" class="entry-role-btn" data-role="organization">Organization</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="site-shell" class="site-shell">
+      <Navbar active={navActive} />
+      <main class="flex-1">
+        <slot />
+      </main>
+      <Footer />
+    </div>
+
+    <style is:global>
+      .site-shell {
+        min-height: 100vh;
+        width: 100%;
+        overflow-x: hidden;
+        transition: filter 0.35s ease;
+      }
+
+      body.gate-open {
+        overflow: hidden;
+      }
+
+      body.gate-open .site-shell {
+        filter: blur(10px) brightness(0.72);
+        pointer-events: none;
+        user-select: none;
+      }
+
+      .entry-gate {
+        position: fixed;
+        inset: 0;
+        z-index: 9999;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        padding: 24px;
+        background: radial-gradient(circle at 22% 10%, rgba(174, 214, 241, 0.42) 0%, rgba(174, 214, 241, 0.08) 36%, rgba(5, 63, 92, 0.4) 100%);
+      }
+
+      body.gate-open .entry-gate {
+        display: flex;
+      }
+
+      .entry-gate-card {
+        width: min(92vw, 560px);
+        background:
+          radial-gradient(circle at 10% 16%, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0) 36%),
+          linear-gradient(146deg, rgba(236, 246, 255, 0.96) 0%, rgba(199, 228, 248, 0.94) 100%);
+        border: 2px solid rgba(134, 197, 255, 0.68);
+        border-radius: 28px;
+        box-shadow:
+          0 18px 55px rgba(5, 63, 92, 0.22),
+          inset 0 1px 0 rgba(255, 255, 255, 0.65);
+        padding: 30px 24px;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .entry-gate-card::after {
+        content: '';
+        position: absolute;
+        width: 190px;
+        height: 190px;
+        border-radius: 50%;
+        top: -80px;
+        right: -65px;
+        background: radial-gradient(circle, rgba(134, 197, 255, 0.35) 0%, rgba(134, 197, 255, 0) 70%);
+        pointer-events: none;
+      }
+
+      .entry-gate-logo-wrap {
+        width: 84px;
+        height: 84px;
+        margin: 0 auto 10px;
+        border-radius: 50%;
+        display: grid;
+        place-items: center;
+        background: linear-gradient(160deg, #ffffff 0%, #d8ecfb 100%);
+        box-shadow: 0 8px 18px rgba(5, 63, 92, 0.14);
+      }
+
+      .entry-gate-logo {
+        width: 62px;
+        height: auto;
+        display: block;
+      }
+
+      .entry-gate-kicker {
+        margin: 0 0 4px;
+        color: #2f78ab;
+        font-size: 1.2rem;
+        font-weight: 900;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+      }
+
+      .entry-gate-title {
+        margin: 0;
+        color: #053F5C;
+        font-size: clamp(1.25rem, 2.8vw, 1.85rem);
+        font-weight: 900;
+        line-height: 1.25;
+      }
+
+      .entry-gate-subtitle {
+        margin: 10px 0 0;
+        color: #406882;
+        font-size: 0.93rem;
+        font-weight: 700;
+      }
+
+      .entry-gate-actions {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+        margin-top: 22px;
+      }
+
+      .entry-role-btn {
+        border: none;
+        border-radius: 999px;
+        padding: 12px 16px;
+        background: linear-gradient(145deg, #0a5a83 0%, #053F5C 100%);
+        color: #ffffff;
+        font-weight: 800;
+        letter-spacing: 0.02em;
+        cursor: pointer;
+        box-shadow: 0 8px 16px rgba(5, 63, 92, 0.2);
+        transition: transform 0.18s ease, box-shadow 0.2s ease, background 0.2s ease;
+      }
+
+      .entry-role-btn:hover {
+        background: linear-gradient(145deg, #116c9b 0%, #074c6f 100%);
+        transform: translateY(-2px) rotate(-1deg);
+        box-shadow: 0 12px 20px rgba(5, 63, 92, 0.28);
+      }
+
+      .entry-role-btn:active {
+        transform: translateY(0);
+      }
+
+      @media (max-width: 640px) {
+        .entry-gate-card {
+          border-radius: 22px;
+          padding: 22px 18px;
+        }
+
+        .entry-gate-logo-wrap {
+          width: 74px;
+          height: 74px;
+        }
+
+        .entry-gate-logo {
+          width: 56px;
+        }
+
+        .entry-gate-actions {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+
+    <script is:inline>
+      (() => {
+        const gateKey = 'wg-user-role';
+
+        const applyGateState = () => {
+          const selectedRole = window.localStorage.getItem(gateKey);
+          document.body.classList.toggle('gate-open', !selectedRole);
+        };
+
+        const setupGateActions = () => {
+          document.querySelectorAll('.entry-role-btn').forEach((button) => {
+            button.addEventListener('click', () => {
+              const role = button.getAttribute('data-role');
+              if (!role) return;
+              window.localStorage.setItem(gateKey, role);
+              applyGateState();
+            });
+          });
+        };
+
+        document.addEventListener('astro:page-load', () => {
+          setupGateActions();
+          applyGateState();
+        });
+
+        setupGateActions();
+        applyGateState();
+      })();
+    </script>
+  </body>
+</html>

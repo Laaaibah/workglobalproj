@@ -1,0 +1,13 @@
+---
+// PricingCard is now a thin pass-through — all rendering is done inline in pricing.astro
+// Kept for backwards compatibility if other pages import it
+interface Props {
+  id?: string;
+  name?: string;
+  price?: string;
+  features?: string[];
+  backgroundImg?: string;
+}
+const { id, name, price, features = [], backgroundImg } = Astro.props;
+---
+<!-- No longer used directly; pricing.astro renders cards inline -->

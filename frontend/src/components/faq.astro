@@ -1,0 +1,263 @@
+---
+// FAQ.astro — Reusable FAQ accordion component
+// Usage:
+//   import FAQ from '../components/FAQ.astro';
+//   <FAQ items={faqData} title="Frequently Asked Questions" subtitle="Everything you need to know about Work Global." />
+
+interface FAQItem {
+  question: string;
+  answer: string;
+}
+
+interface Props {
+  items: FAQItem[];
+  title?: string;
+  subtitle?: string;
+}
+
+const {
+  items = [],
+  title = "Frequently Asked Questions",
+  subtitle = "Everything you need to know about Work Global.",
+} = Astro.props;
+
+// Split items into two columns
+const mid = Math.ceil(items.length / 2);
+const leftCol  = items.slice(0, mid);
+const rightCol = items.slice(mid);
+---
+
+<section class="faq-section">
+
+  <!-- Header -->
+  <div class="faq-header">
+    <h2 class="faq-title">
+      FREQUENTLY <span class="highlight">ASKED</span> QUESTIONS
+    </h2>
+    <p class="faq-subtitle">{subtitle}</p>
+  </div>
+
+  <!-- Two-column grid -->
+  <div class="faq-grid">
+    <ul class="faq-col">
+      {leftCol.map((item, i) => (
+        <li class="faq-item" data-index={`l${i}`}>
+          <button class="faq-btn" aria-expanded="false">
+            <span class="faq-question">{item.question}</span>
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-answer" hidden>
+            <p>{item.answer}</p>
+          </div>
+        </li>
+      ))}
+    </ul>
+
+    <ul class="faq-col">
+      {rightCol.map((item, i) => (
+        <li class="faq-item" data-index={`r${i}`}>
+          <button class="faq-btn" aria-expanded="false">
+            <span class="faq-question">{item.question}</span>
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-answer" hidden>
+            <p>{item.answer}</p>
+          </div>
+        </li>
+      ))}
+    </ul>
+  </div>
+
+</section>
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+
+  :root {
+    --navy:       #053F5C;
+    --light-blue: #86C5FF;
+    --orange:     #ec4492;
+    --accent-gradient: linear-gradient(90deg, rgb(62, 134, 198) 0%, rgb(166, 102, 170) 24.44045608108108%, rgb(236, 68, 146) 50.77597128378378%, rgb(238, 68, 84) 75.87274774774775%, rgb(240, 84, 39) 100%);
+    --bg:         #ddeef8;
+    --card-bg:    #8dc8ee;
+  }
+
+  .faq-section {
+    font-family: 'Inter', sans-serif;
+    width: 100%;
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 48px 24px 64px;
+  }
+
+  /* ── Header ── */
+  .faq-header {
+    text-align: center;
+    margin-bottom: 36px;
+  }
+
+  .faq-title {
+    font-size: 1.5rem;
+    font-weight: 900;
+    letter-spacing: 0.06em;
+    color: var(--navy);
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .faq-title .highlight {
+    background: var(--accent-gradient);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .faq-subtitle {
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: #5a7a8e;
+  }
+
+  /* ── Two-column grid ── */
+  .faq-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 28px 84px;
+  }
+
+  @media (max-width: 680px) {
+    .faq-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .faq-col {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+  }
+
+  /* ── Each item ── */
+  .faq-item {
+    border-radius: 12px;
+    overflow: hidden;
+  }
+
+  /* ── Button row ── */
+  .faq-btn {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 14px 14px 14px 18px;
+    background: var(--card-bg);
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    text-align: left;
+    transition: background 0.2s;
+  }
+
+  .faq-btn:hover {
+    background: #79bae4;
+  }
+
+  /* open state — keep rounded top, square bottom */
+  .faq-item.open .faq-btn {
+    border-radius: 12px 12px 0 0;
+    background: #79bae4;
+  }
+
+  .faq-question {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--navy);
+    flex: 1;
+  }
+
+  /* Orange + icon badge */
+  .faq-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    min-width: 32px;
+    border-radius: 8px;
+    background: var(--accent-gradient);
+    color: #fff;
+    font-size: 1.3rem;
+    font-weight: 700;
+    line-height: 1;
+    transition: transform 0.25s ease;
+  }
+
+  .faq-item.open .faq-icon {
+    transform: rotate(45deg);
+  }
+
+  /* ── Answer panel ── */
+  .faq-answer {
+    background: #b8ddf4;
+    border-radius: 0 0 12px 12px;
+    padding: 0 18px;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.35s ease, padding 0.35s ease;
+  }
+
+  .faq-answer:not([hidden]) {
+    padding: 14px 18px;
+    max-height: 300px;
+  }
+
+  .faq-answer p {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--navy);
+    line-height: 1.6;
+    margin: 0;
+  }
+</style>
+
+<script>
+  function setupFaqAccordions() {
+    // Accordion toggle — works with multiple FAQ instances on the same page
+    document.querySelectorAll('.faq-btn').forEach((btn) => {
+      if (btn.dataset.faqBound === 'true') return;
+      btn.dataset.faqBound = 'true';
+
+      btn.addEventListener('click', () => {
+        const item = btn.closest('.faq-item');
+        const answer = item?.querySelector('.faq-answer');
+        const isOpen = item?.classList.contains('open');
+        if (!item || !answer) return;
+
+        // Close all siblings in the same column
+        const col = item.closest('.faq-col');
+        if (col) {
+          col.querySelectorAll('.faq-item.open').forEach((openItem) => {
+            openItem.classList.remove('open');
+            const a = openItem.querySelector('.faq-answer');
+            const openBtn = openItem.querySelector('.faq-btn');
+            if (a) a.hidden = true;
+            if (openBtn) openBtn.setAttribute('aria-expanded', 'false');
+          });
+        }
+
+        if (!isOpen) {
+          item.classList.add('open');
+          answer.hidden = false;
+          btn.setAttribute('aria-expanded', 'true');
+        }
+      });
+    });
+  }
+
+  document.addEventListener('astro:page-load', setupFaqAccordions);
+  setupFaqAccordions();
+</script>

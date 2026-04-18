@@ -1,0 +1,135 @@
+---
+import FeatureCard from './FeatureCard.astro';
+
+interface Step {
+  number: string;
+  title: string;
+  description: string;
+  color?: string; // e.g. bg-[#053F5C]
+  textColor?: string;
+}
+
+interface Stat {
+  icon: 'globe' | 'heart';
+  value: string;
+  label: string;
+}
+
+interface Props {
+  tagline: string;
+  title: string;
+  steps: Step[];
+  stats?: Stat[];
+  images: string[];
+  layout?: 'left' | 'right';
+  reverseStack?: boolean;
+  tiltDirection?: 'left' | 'right';
+  bgImage?: string;
+  bgColor?: string;
+  buttonText?: string;
+  buttonLink?: string;
+  swipeable?: boolean;
+  centered?: boolean;
+}
+
+const { 
+  tagline, 
+  title, 
+  steps, 
+  stats = [],
+  images, 
+  layout = 'left', 
+  reverseStack = false, 
+  tiltDirection = 'left',
+  bgImage,
+  bgColor,
+  buttonText = "Download the App",
+  buttonLink = "https://instagram.com",
+  swipeable = false,
+  centered = false
+} = Astro.props;
+---
+
+<section 
+  class={`w-full py-12 sm:py-24 overflow-visible relative ${bgImage ? 'bg-cover bg-center bg-no-repeat' : ''}`}
+  style={bgImage ? `background-image: url(${bgImage});` : `background-color: ${bgColor || 'transparent'};`}
+>
+  {bgImage && <div class="absolute inset-0 bg-white/20 backdrop-blur-[2px]"></div>}
+
+  <div class="relative z-10 mx-auto max-w-7xl px-4 sm:px-12 lg:px-20">
+    <div class="grid lg:grid-cols-2 gap-12 sm:gap-24 lg:items-center">
+      
+      <!-- Phone Stack Column (Changes order based on layout) -->
+      <div class={`${layout === 'right' ? 'lg:order-2' : 'lg:order-1'}`}>
+        <FeatureCard 
+          images={images} 
+          align={layout === 'left' ? 'left' : 'right'} 
+          reverseStack={reverseStack} 
+          tiltDirection={tiltDirection}
+          swipeable={swipeable}
+        />
+      </div>
+
+      <!-- Description Column -->
+      <div 
+        data-aos={layout === 'left' ? 'fade-left' : 'fade-right'} 
+        class={`${layout === 'left' ? 'lg:pl-12 lg:order-2' : 'lg:pr-12 lg:order-1'} flex flex-col justify-center ${centered ? 'items-center text-center' : ''}`}
+      >
+        {tagline && <span class="inline-block text-[#053F5C]/60 font-bold uppercase tracking-[0.3em] text-xs mb-4">{tagline}</span>}
+        <h3 class={`text-3xl sm:text-5xl lg:text-6xl font-bold text-[#053F5C] leading-tight sm:leading-[1.2] lg:leading-[1.1] text-center ${centered ? '' : 'lg:text-left'} ${steps.length > 0 || stats.length > 0 || buttonText ? 'mb-8 sm:mb-10' : ''}`}>
+          {title}
+        </h3>
+
+        {stats.length > 0 && (
+          <div class="flex flex-col items-center gap-8 mt-4 mb-8">
+            {stats.map(stat => (
+              <div class="flex items-center gap-5 text-[#053F5C]">
+                <div class="flex-shrink-0">
+                  {stat.icon === 'globe' ? (
+                    <svg class="w-10 h-10" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                      <circle cx="12" cy="12" r="10"></circle>
+                      <line x1="2" y1="12" x2="22" y2="12"></line>
+                      <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                    </svg>
+                  ) : (
+                    <svg class="w-10 h-10" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                    </svg>
+                  )}
+                </div>
+                <div class="flex flex-col items-start leading-tight">
+                  <span class="text-3xl sm:text-4xl font-extrabold">{stat.value}</span>
+                  <span class="text-lg sm:text-xl font-bold opacity-90">{stat.label}</span>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+
+        {steps.length > 0 && (
+          <div class="space-y-8">
+            {steps.map((step) => (
+              <div class="flex gap-6 items-start">
+                <div class={`w-12 h-12 rounded-full flex-shrink-0 flex items-center justify-center font-bold shadow-sm transition hover:scale-110 ${step.color || 'bg-[#053F5C]'} ${step.textColor || 'text-white'}`}>
+                  {step.number}
+                </div>
+                <div>
+                  <h4 class="font-bold text-[#053F5C] text-xl mb-2">{step.title}</h4>
+                  <p class="text-[#053F5C]/70">{step.description}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+        
+        {buttonText && (
+          <a href={buttonLink} class="mt-8 sm:mt-12 self-center lg:self-start inline-flex items-center gap-3 bg-[#053F5C] text-white px-8 py-4 rounded-full font-bold group hover:gap-5 transition-all">
+              {buttonText}
+              <svg class="w-5 h-5 transition-transform group-hover:translate-x-1" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M5 12h14m-7-7l7 7-7 7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        )}
+      </div>
+
+    </div>
+  </div>
+</section>

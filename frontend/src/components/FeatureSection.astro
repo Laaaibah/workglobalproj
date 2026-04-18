@@ -1,0 +1,165 @@
+---
+import FeatureCard from './FeatureCard.astro';
+
+interface Step {
+  number: string;
+  icon?: string;
+  title: string;
+  description: string;
+  color?: string; // e.g. bg-[#053F5C]
+  textColor?: string;
+}
+
+interface Stat {
+  icon: 'globe' | 'heart' | 'users';
+  value: string;
+  label: string;
+}
+
+interface Props {
+  tagline: string;
+  title: string;
+  steps: Step[];
+  stats?: Stat[];
+  images: string[];
+  layout?: 'left' | 'right';
+  reverseStack?: boolean;
+  tiltDirection?: 'left' | 'right';
+  bgImage?: string;
+  bgColor?: string;
+  buttonText?: string;
+  buttonLink?: string;
+  swipeable?: boolean;
+  centered?: boolean;
+}
+
+const { 
+  tagline, 
+  title, 
+  steps, 
+  stats = [],
+  images, 
+  layout = 'left', 
+  reverseStack = false, 
+  tiltDirection = 'left',
+  bgImage,
+  bgColor,
+  buttonText = "Download the App",
+  buttonLink = "https://instagram.com",
+  swipeable = false,
+  centered = false
+} = Astro.props;
+
+// SVGs using a function to avoid repeating class names
+const getIcon = (name: string, className: string) => {
+  const icons: Record<string, string> = {
+    'file-text': `<svg class="${className}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>`,
+    'megaphone': `<svg class="${className}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 11 18-5v12L3 14v-3z"/><path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"/></svg>`,
+    'search': `<svg class="${className}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>`,
+    'map-pin': `<svg class="${className}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>`,
+    'clock': `<svg class="${className}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>`,
+    'video': `<svg class="${className}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>`,
+    'check-circle': `<svg class="${className}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>`,
+    'sparkles': `<svg class="${className}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/><path d="M5 3v4"/><path d="M19 17v4"/><path d="M3 5h4"/><path d="M17 19h4"/></svg>`,
+    'globe': `<svg class="${className}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>`,
+    'zap': `<svg class="${className}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>`,
+  };
+  return icons[name] || '';
+};
+---
+
+<section 
+  class={`w-full py-12 sm:py-24 overflow-x-clip overflow-y-visible relative ${bgImage ? 'bg-cover bg-center bg-no-repeat' : ''}`}
+  style={bgImage ? `background-image: url(${bgImage});` : `background-color: ${bgColor || 'transparent'};`}
+>
+  {bgImage && <div class="absolute inset-0 bg-white/20 backdrop-blur-[2px]"></div>}
+
+  <div class="relative z-10 mx-auto max-w-7xl px-4 sm:px-12 lg:px-20">
+    <div class="grid lg:grid-cols-2 gap-10 sm:gap-24 lg:items-center">
+      
+      <!-- Phone Stack Column (Changes order based on layout) -->
+      <div class={`${layout === 'right' ? 'lg:order-2' : 'lg:order-1'}`}>
+        <FeatureCard 
+          images={images} 
+          align={layout === 'left' ? 'left' : 'right'} 
+          reverseStack={reverseStack} 
+          tiltDirection={tiltDirection}
+          swipeable={swipeable}
+        />
+      </div>
+
+      <!-- Description Column -->
+      <div 
+        data-aos={layout === 'left' ? 'fade-left' : 'fade-right'} 
+        class={`${layout === 'left' ? 'lg:pl-12 lg:order-2' : 'lg:pr-12 lg:order-1'} flex flex-col justify-center ${centered ? 'items-center text-center' : ''}`}
+      >
+        {tagline && <span class="inline-block text-[#053F5C]/60 font-bold uppercase tracking-[0.3em] text-xs mb-4">{tagline}</span>}
+        <h3 
+          class={`text-2xl sm:text-5xl lg:text-6xl font-bold text-[#053F5C] leading-tight sm:leading-[1.2] lg:leading-[1.1] text-center ${centered ? '' : 'lg:text-left'} break-words ${steps.length > 0 || stats.length > 0 || buttonText ? 'mb-8 sm:mb-10' : ''}`}
+          set:html={title}
+        />
+
+        {stats.length > 0 && (
+          <div class="flex flex-col items-center gap-7 mt-4 mb-8">
+            {stats.map(stat => (
+              <div class="flex items-center gap-4 sm:gap-5 text-[#053F5C] w-full max-w-[320px] sm:max-w-none">
+                <div class="flex-shrink-0 leading-none">
+                  {stat.icon === 'globe' ? (
+                    <svg class="w-9 h-9 sm:w-10 sm:h-10" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                      <circle cx="12" cy="12" r="10"></circle>
+                      <line x1="2" y1="12" x2="22" y2="12"></line>
+                      <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                    </svg>
+                  ) : stat.icon === 'heart' ? (
+                    <svg class="w-9 h-9 sm:w-10 sm:h-10" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                    </svg>
+                  ) : (
+                    <svg class="w-9 h-9 sm:w-10 sm:h-10" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                      <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                      <circle cx="9" cy="7" r="4"></circle>
+                      <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                      <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                    </svg>
+                  )}
+                </div>
+                <div class={`flex flex-col items-start leading-none ${stat.icon === 'globe' ? '-translate-y-[10px]' : ''} ${stat.icon === 'users' ? 'translate-y-[3px]' : ''}`}>
+                  <span class="text-3xl sm:text-4xl font-extrabold tracking-tight">{stat.value}</span>
+                  <span class="text-lg sm:text-xl font-bold opacity-90 mt-1">{stat.label}</span>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+
+        {steps.length > 0 && (
+          <div class="space-y-8">
+            {steps.map((step) => (
+              <div class="flex gap-6 items-start">
+                <div class={`w-12 h-12 rounded-full flex-shrink-0 flex items-center justify-center font-bold shadow-sm transition hover:scale-110 ${step.color || 'bg-[#053F5C]'} ${step.textColor || 'text-white'}`}>
+                  {step.icon ? (
+                    <Fragment set:html={getIcon(step.icon, 'w-6 h-6')} />
+                  ) : (
+                    step.number
+                  )}
+                </div>
+                <div>
+                  <h4 class="font-bold text-[#053F5C] text-xl mb-2">{step.title}</h4>
+                  <p class="text-[#053F5C]/70">{step.description}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+        
+        {buttonText && (
+          <a href={buttonLink} class="mt-8 sm:mt-12 self-center lg:self-start inline-flex items-center gap-3 bg-[#053F5C] text-white px-8 py-4 rounded-full font-bold group hover:gap-5 transition-all">
+              {buttonText}
+              <svg class="w-5 h-5 transition-transform group-hover:translate-x-1" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M5 12h14m-7-7l7 7-7 7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        )}
+      </div>
+
+    </div>
+  </div>
+</section>

@@ -1,0 +1,73 @@
+---
+import EventCard from './EventCard.astro';
+
+interface EventItem {
+  type: 'video' | 'image';
+  src: string;
+  title?: string;
+  subtitle?: string;
+}
+
+interface Props {
+  events: EventItem[];
+  title: string;
+  tagline: string;
+}
+
+const { events, title, tagline } = Astro.props;
+
+// Double the events list to create a seamless infinite loop
+const loopEvents = [...events, ...events, ...events];
+---
+
+<section class="w-full py-24 sm:py-32 overflow-hidden">
+  <div class="max-w-7xl mx-auto px-4 sm:px-12 lg:px-20 mb-16 flex flex-col items-center text-center">
+    <span class="inline-block text-[#053F5C]/60 font-bold uppercase tracking-[0.3em] text-xs mb-4">{tagline}</span>
+    <h2 class="text-4xl sm:text-6xl font-black text-[#053F5C] leading-tight">{title}</h2>
+  </div>
+
+  <!-- Infinite Marquee -->
+  <div class="marquee-container flex gap-6 sm:gap-10 py-10">
+    <div class="marquee-track flex gap-6 sm:gap-10">
+      {loopEvents.map((item) => (
+        <EventCard content={item} />
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .marquee-container {
+    width: 100%;
+    position: relative;
+    mask-image: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%);
+  }
+
+  .marquee-track {
+    animation: marquee 40s linear infinite;
+    width: max-content;
+  }
+
+  /* Pause on hover for easier interaction */
+  .marquee-container:hover .marquee-track {
+    animation-play-state: paused;
+  }
+
+  @keyframes marquee {
+    0% {
+      transform: translateX(-33.33%);
+    }
+    100% {
+      /* This value will depend on the number of items. 
+         Moving by roughly 1/3 of the total width since we tripled the array. */
+      transform: translateX(0);
+    }
+  }
+
+  /* Faster marquee on mobile if needed */
+  @media (max-width: 640px) {
+    .marquee-track {
+      animation-duration: 25s;
+    }
+  }
+</style>

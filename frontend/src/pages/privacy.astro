@@ -1,0 +1,355 @@
+---
+import Layout from '../layouts/Layout.astro';
+import bgImage from '../assets/background.png?url';
+
+const privacySections = [
+  {
+    navLabel: 'Introduction',
+    title: 'Privacy Policy',
+    updated: 'Updated April 17, 2026',
+    heading: 'Introduction',
+    content: [
+      `Welcome to Workglobal. We respect your privacy and are committed to protecting your personal data. This Privacy Policy explains how Workglobal, owned and operated by our parent company Resource Pool Group Ltd, protects your information when you use our mobile application and website.`,
+    ],
+  },
+  {
+    navLabel: 'Age Restriction',
+    title: 'Age Restriction',
+    updated: 'Updated April 17, 2026',
+    heading: 'Age Restriction',
+    content: [
+      `Workglobal is a professional networking and recruitment platform. You must be at least 18 years of age to create an account and use our services. We do not knowingly collect personal data from anyone under the age of 18. If we become aware that a minor has provided us with personal information, we will take immediate steps to delete that account and the associated data.`,
+    ],
+  },
+  {
+    navLabel: 'Information We Collect',
+    title: 'Information We Collect',
+    updated: 'Updated April 17, 2026',
+    heading: 'Information We Collect',
+    content: [
+      `Account & Profile Data: Name, email address, phone number, location, employment history, education, and skills.`,
+      `Verification Data: For Jobseeker Pro users and Verified Employers, we collect government-issued IDs or business registration documents to issue verification badges and ensure platform authenticity.`,
+      `App Activity & Behavioral Data: We track your "swipes" (right/left), daily login streaks, avatar progression, and matching history to train and improve our AI matching algorithm.`,
+      `Media & Communications: Video Vault: Video interview pitches recorded and saved within the app. In-App Messaging: Direct chat logs between matched jobseekers and employers. AI Prompts: Inputs you provide to the AI Career Coach for generating cover letters.`,
+      `Financial Information: Payment details for Pro, Premium, or Enterprise subscriptions (processed securely via PCI-compliant third-party payment gateways).`,
+      `Device & Technical Data: IP address, device type, operating system, and app usage analytics.`,
+    ],
+  },
+  {
+    navLabel: 'How We Use Your Information',
+    title: 'How We Use Your Information',
+    updated: 'Updated April 17, 2026',
+    heading: 'How We Use Your Information',
+    content: [
+      `We do not sell your personal data to third-party data brokers. We use your information strictly to operate, secure, and improve the Workglobal platform and our broader ecosystem.`,
+      `AI Matchmaking: To algorithmically recommend top candidates to employers and curate hyper-relevant job cards for jobseekers.`,
+      `AI Video Screening: To automatically analyze and grade candidate video submissions for communication confidence and core competencies on behalf of Premium/Enterprise employers.`,
+      `Gamification & User Experience: To track consecutive logins, award daily streaks, and unlock profile avatars.`,
+      `Platform Safety: To verify user identities, prevent fraud, and penalize abusive or "ghosting" behaviors within the chat ecosystem.`,
+      `Ecosystem Services: To facilitate seamless access to related professional services offered by our partners and corporate affiliates.`,
+    ],
+  },
+  {
+    navLabel: 'Third-Party Analytics & Tracking',
+    title: 'Third-Party Analytics',
+    updated: 'Updated April 17, 2026',
+    heading: 'Third-Party Analytics & Tracking',
+    content: [
+      `We use Google Analytics to understand how users interact with our website and mobile application. Google Analytics collects data such as your IP address, device type, and app activity to help us improve user experience, monitor app performance, and optimize our platform. You can manage your tracking preferences through your device settings.`,
+    ],
+  },
+  {
+    navLabel: 'How We Share Your Information',
+    title: 'How We Share Your Information',
+    updated: 'Updated April 17, 2026',
+    heading: 'How We Share Your Information',
+    content: [
+      `With Matched Users: If a candidate and employer mutually swipe right, profile data, video pitches, and direct messaging capabilities are unlocked and shared between both parties to facilitate the hiring process.`,
+      `Parent Company & Subsidiaries: We share information with our parent company, Resource Pool Group Ltd, and its subsidiaries and corporate affiliates. This allows us to offer interconnected services, such as premium freelance access or cross-border payroll, ensuring a seamless experience across our corporate ecosystem.`,
+      `Strategic Partners: We may share necessary data with trusted third-party partners who provide specialized services that support our users, such as immigration consultants or business processing partners, but only to the extent necessary to facilitate those specific services.`,
+      `Service Providers: We share data with vendors who strictly assist us with platform operations, such as cloud hosting, secure payment processing, and AI infrastructure.`,
+      `Legal Compliance: We may disclose your information if required by law, regulation, or legal process within the UK, Asia, or your local jurisdiction.`,
+    ],
+  },
+  {
+    navLabel: 'International Data Transfers',
+    title: 'International Transfers',
+    updated: 'Updated April 17, 2026',
+    heading: 'International Data Transfers',
+    content: [
+      `Workglobal operates a global marketplace, with operational hubs in Asia and users worldwide. Your personal information may be transferred to, stored, and processed in countries outside of your country of residence, including the United Kingdom, where Resource Pool Group Ltd is headquartered, and other regions where our subsidiaries and partners operate.`,
+      `These countries may have data protection laws that differ from those in your home country. When we transfer your data internationally, we ensure appropriate safeguards are in place to protect your information, such as utilizing Standard Contractual Clauses (SCCs) approved by the UK Information Commissioner's Office (ICO).`,
+    ],
+  },
+  {
+    navLabel: 'Data Security and Retention',
+    title: 'Security & Retention',
+    updated: 'Updated April 17, 2026',
+    heading: 'Data Security and Retention',
+    content: [
+      `We implement enterprise grade encryption to protect your profile data, video interviews, and chat histories. We retain your personal information only for as long as your account is active.`,
+      `If you choose to delete your account, your data will be securely retained on our servers for a strict period of 90 days. This is necessary to comply with legal obligations, prevent fraud, and resolve any outstanding billing disputes. After this 90-day period, your personal data will be permanently and irretrievably erased from our systems.`,
+    ],
+  },
+  {
+    navLabel: 'Global and Regional Privacy Rights',
+    title: 'Privacy Rights',
+    updated: 'Updated April 17, 2026',
+    heading: 'Global and Regional Privacy Rights',
+    content: [
+      `Depending on where you live, you have specific rights regarding your personal data:`,
+      `European Economic Area (EEA) and UK Users: You are protected under the GDPR and UK GDPR, which includes the right to access, rectify, or erase your data, and the right to object to algorithmic processing.`,
+      `California Residents (CCPA/CPRA): You have the right to request access to the specific pieces of personal information we have collected about you, the right to request deletion, and the right to opt-out of the "sale" or "sharing" of your personal information. Workglobal does not sell your personal data.`,
+      `Other Jurisdictions: We are committed to facilitating your privacy rights in accordance with the applicable data protection laws of your local jurisdiction in Asia and globally.`,
+    ],
+  },
+  {
+    navLabel: 'Contact Us',
+    title: 'Contact Us',
+    updated: 'Updated April 17, 2026',
+    heading: 'Contact Us',
+    content: [
+      `If you have any questions or concerns about this Privacy Policy or our data practices, please contact our Data Protection Officer at Resource Pool Group Ltd.`,
+      `Email: support@workglobal.ai`,
+    ],
+  },
+];
+---
+
+<Layout title="Privacy Policy" navActive="">
+  <div class="bg-layer" aria-hidden="true" style="background-image:var(--bgImage)"></div>
+
+  <main class="legal-page">
+    <aside class="legal-nav" aria-label="Privacy topics">
+      <ul>
+        {privacySections.map((section, index) => (
+          <li>
+            <button
+              class={`legal-nav-btn${index === 0 ? ' is-active' : ''}`}
+              data-tab={index}
+              aria-controls={`panel-${index}`}
+              aria-selected={index === 0 ? 'true' : 'false'}
+              type="button"
+            >
+              <span class="dot">{index + 1}</span>
+              <span>{section.navLabel}</span>
+            </button>
+          </li>
+        ))}
+      </ul>
+    </aside>
+
+    <section class="legal-content-wrap">
+      {privacySections.map((section, index) => (
+        <article
+          id={`panel-${index}`}
+          class={`legal-panel${index === 0 ? ' is-active' : ''}`}
+          data-panel={index}
+          hidden={index !== 0}
+        >
+          <h1>{section.title}</h1>
+          <p class="updated">{section.updated}</p>
+          <h2>{section.heading}</h2>
+          {section.content.map((item) => <p>{item}</p>)}
+        </article>
+      ))}
+      <footer class="legal-footer">Last updated: April 17, 2026</footer>
+    </section>
+  </main>
+
+  <style define:vars={{ bgImage: `url(${bgImage})` }}>
+    .bg-layer {
+      position: fixed;
+      inset: 0;
+      background-image: var(--bgImage);
+      background-size: cover;
+      background-position: center;
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    .legal-page {
+      width: min(1080px, 92vw);
+      margin: clamp(80px, 10vw, 140px) auto clamp(30px, 4vw, 50px);
+      background: #86C5FF;
+      border: 1px solid rgba(22, 43, 67, 0.08);
+      border-radius: 12px;
+      box-shadow: 0 20px 50px rgba(5, 63, 92, 0.15);
+      display: grid;
+      grid-template-columns: minmax(220px, 30%) 1fr;
+      overflow: hidden;
+    }
+
+    .legal-nav {
+      background: #e6edf0;
+      border-right: 1px solid rgba(22, 43, 67, 0.08);
+      padding: 22px 14px;
+    }
+
+    .legal-nav ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: grid;
+      gap: 10px;
+    }
+
+    .legal-nav-btn {
+      width: 100%;
+      border: 0;
+      background: transparent;
+      text-align: left;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 8px;
+      color: #6c8d95;
+      font-size: 1rem;
+      font-weight: 700;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.2s ease, color 0.2s ease;
+    }
+
+    .legal-nav-btn .dot {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.78rem;
+      font-weight: 800;
+      background: #b6e7ea;
+      color: #1a6b75;
+      flex-shrink: 0;
+    }
+
+    .legal-nav-btn.is-active,
+    .legal-nav-btn:hover {
+      color: #053F5C;
+      background: rgba(5, 63, 92, 0.06);
+    }
+
+    .legal-content-wrap {
+      padding: clamp(24px, 3vw, 38px);
+      background: transparent;
+    }
+
+    .legal-panel {
+      color: #053F5C;
+      line-height: 1.7;
+      opacity: 0;
+      transform: translateY(8px);
+      transition: opacity 0.24s ease, transform 0.24s ease;
+    }
+
+    .legal-panel.is-active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .legal-panel h1 {
+      margin: 0;
+      color: #053F5C;
+      font-size: clamp(2rem, 3vw, 2.5rem);
+      letter-spacing: 0.01em;
+    }
+
+    .updated {
+      margin: 4px 0 18px;
+      color: #a2a5aa;
+      font-weight: 700;
+      font-size: 0.95rem;
+    }
+
+    .legal-panel h2 {
+      margin: 0 0 10px;
+      color: #053F5C;
+      font-size: 1.5rem;
+      border-bottom: 1px solid rgba(5,63,92,0.12);
+      padding-bottom: 6px;
+    }
+
+    .legal-panel p {
+      margin: 0 0 14px;
+      color: #053F5C;
+      font-weight: 600;
+    }
+
+    .legal-footer {
+      margin-top: 18px;
+      padding-top: 12px;
+      border-top: 1px solid rgba(90, 95, 102, 0.2);
+      color: #8f949a;
+      font-size: 0.9rem;
+      font-weight: 700;
+    }
+
+    @media (max-width: 860px) {
+      .legal-page {
+        grid-template-columns: 1fr;
+      }
+
+      .legal-nav {
+        border-right: 0;
+        border-bottom: 1px solid rgba(22, 43, 67, 0.08);
+      }
+
+      .legal-nav ul {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 580px) {
+      .legal-page {
+        width: min(96vw, 1080px);
+      }
+
+      .legal-nav ul {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+
+  <script is:inline>
+    (() => {
+      const setupTabs = () => {
+        const buttons = Array.from(document.querySelectorAll('.legal-nav-btn'));
+        const panels = Array.from(document.querySelectorAll('.legal-panel'));
+        if (!buttons.length || !panels.length) return;
+
+        const activateTab = (tabIndex) => {
+          buttons.forEach((btn, idx) => {
+            const active = idx === tabIndex;
+            btn.classList.toggle('is-active', active);
+            btn.setAttribute('aria-selected', active ? 'true' : 'false');
+          });
+
+          panels.forEach((panel, idx) => {
+            const active = idx === tabIndex;
+            panel.classList.toggle('is-active', active);
+            panel.hidden = !active;
+          });
+
+          const target = panels[tabIndex];
+          if (target) {
+            setTimeout(() => {
+              const topOffset = 12;
+              const rect = target.getBoundingClientRect();
+              const absoluteTop = window.scrollY + rect.top - topOffset;
+              window.scrollTo({ top: absoluteTop, behavior: 'smooth' });
+            }, 60);
+          }
+        };
+
+        buttons.forEach((btn, idx) => {
+          btn.addEventListener('click', () => activateTab(idx));
+        });
+      };
+
+      document.addEventListener('astro:page-load', setupTabs);
+      setupTabs();
+    })();
+  </script>
+</Layout>

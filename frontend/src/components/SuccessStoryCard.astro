@@ -1,0 +1,340 @@
+---
+interface Props {
+  image: string;
+  tag: string;
+  title: string;
+  description: string;
+  storyText?: string;
+  vmSrc?: string;
+  imagePosition?: string;
+  cardColor?: string;
+}
+
+const {
+  image,
+  tag,
+  title,
+  description,
+  storyText = '',
+  vmSrc = '',
+  imagePosition = 'center 18%',
+  cardColor = '#98c7eb',
+} = Astro.props;
+---
+
+<article class="story-card" style={`--cardColor:${cardColor};`}>
+  <figure class="story-media">
+    <img src={image} alt={title} loading="lazy" decoding="async" style={`object-position:${imagePosition};`} />
+  </figure>
+
+  <div class="story-content">
+    {tag && (
+      <div class="story-head">
+        <span class="pill">{tag}</span>
+      </div>
+    )}
+
+    <div class="story-body">
+      <h3>{title}</h3>
+      <p>{description}</p>
+
+      {storyText && (
+        <div class="story-scroll-wrap" data-story-wrap>
+          <div class="story-scroll" aria-label="Story transcript" data-story-scroll>
+            <div class="story-scroll-inner">
+              <p>{storyText}</p>
+            </div>
+          </div>
+          <button type="button" class="story-top-btn" data-story-top-btn hidden>Top</button>
+        </div>
+      )}
+
+      <div class="vm-bar" aria-label="Voice message player">
+        <span class="vm-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="8 5 19 12 8 19 8 5"></polygon>
+          </svg>
+        </span>
+        <audio controls preload="none" class="vm-audio">
+          {vmSrc && <source src={vmSrc} type="audio/mpeg" />}
+        </audio>
+      </div>
+    </div>
+  </div>
+</article>
+
+<style>
+  .story-card {
+    width: min(1180px, 92vw);
+    min-height: 460px;
+    border-radius: 32px;
+    background: var(--cardColor);
+    border: 1px solid rgba(15, 51, 78, 0.08);
+    box-shadow: 0 20px 36px rgba(6, 37, 58, 0.14);
+    overflow: hidden;
+    display: grid;
+    grid-template-columns: minmax(340px, 40%) 1fr;
+  }
+
+  .story-media {
+    margin: 0;
+    min-height: 460px;
+    padding: 24px 12px 24px 24px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    background: transparent;
+  }
+
+  .story-media img {
+    width: 318px;
+    height: 398px;
+    max-width: 100%;
+    object-fit: cover;
+    display: block;
+    border-radius: 20px;
+    box-shadow: 0 8px 18px rgba(16, 37, 58, 0.12);
+  }
+
+  .story-content {
+    padding: clamp(28px, 2.8vw, 42px);
+    display: grid;
+    grid-template-rows: auto 1fr;
+  }
+
+  .story-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 18px;
+  }
+
+  .pill {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 999px;
+    padding: 10px 22px;
+    background: #13263a;
+    color: #fff;
+    letter-spacing: 0.08em;
+    font-size: 0.82rem;
+    font-weight: 900;
+    text-transform: uppercase;
+  }
+
+  .story-body {
+    margin-top: clamp(18px, 2.2vw, 30px);
+    max-width: min(620px, 100%);
+  }
+
+  .story-body h3 {
+    color: #10253a;
+    font-size: clamp(1.75rem, 3.6vw, 2.6rem);
+    line-height: 1.12;
+    font-weight: 900;
+    margin: 0 0 18px;
+    letter-spacing: -0.02em;
+  }
+
+  .story-body p {
+    margin: 0;
+    color: rgba(16, 37, 58, 0.86);
+    font-size: clamp(0.98rem, 1.2vw, 1.08rem);
+    line-height: 1.5;
+    font-weight: 600;
+  }
+
+  .story-scroll {
+    margin-top: 16px;
+    height: 210px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    border-radius: 14px;
+    background: rgba(255, 255, 255, 0.62);
+    border: 1px solid rgba(16, 37, 58, 0.14);
+    padding: 14px 16px;
+    position: relative;
+  }
+
+  .story-scroll::before,
+  .story-scroll::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 22px;
+    pointer-events: none;
+    z-index: 2;
+  }
+
+  .story-scroll::before {
+    top: 0;
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 0.92), rgba(255, 255, 255, 0));
+  }
+
+  .story-scroll::after {
+    bottom: 0;
+    background: linear-gradient(to top, rgba(255, 255, 255, 0.92), rgba(255, 255, 255, 0));
+  }
+
+  .story-scroll-inner {
+    display: block;
+  }
+
+  .story-scroll-inner p {
+    margin: 0;
+    color: rgba(16, 37, 58, 0.92);
+    font-size: 0.91rem;
+    line-height: 1.55;
+    font-weight: 600;
+    white-space: pre-line;
+  }
+
+  .story-scroll-wrap {
+    position: relative;
+  }
+
+  .story-top-btn {
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+    border: none;
+    border-radius: 999px;
+    background: #0f3f5d;
+    color: #fff;
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    padding: 7px 10px;
+    cursor: pointer;
+    box-shadow: 0 8px 14px rgba(7, 39, 59, 0.2);
+  }
+
+  .vm-bar {
+    margin-top: 14px;
+    width: 100%;
+    min-height: 54px;
+    border: 1px solid rgba(16, 37, 58, 0.18);
+    background: rgba(255, 255, 255, 0.86);
+    border-radius: 999px;
+    display: grid;
+    grid-template-columns: 38px 1fr;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 12px;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .vm-bar:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 8px 16px rgba(7, 39, 59, 0.12);
+  }
+
+  .vm-icon {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    color: #fff;
+    background: #0f3f5d;
+  }
+
+  .vm-icon svg {
+    width: 16px;
+    height: 16px;
+    margin-left: 2px;
+  }
+
+  .vm-audio {
+    width: 100%;
+    height: 38px;
+    border-radius: 999px;
+    outline: none;
+  }
+
+  @media (max-width: 900px) {
+    .story-card {
+      width: min(92vw, 980px);
+      min-height: 410px;
+      grid-template-columns: minmax(260px, 38%) 1fr;
+    }
+
+    .story-media {
+      min-height: 410px;
+      padding: 18px 10px 18px 18px;
+    }
+
+    .story-media img {
+      width: 254px;
+      height: 330px;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .story-card {
+      grid-template-columns: 1fr;
+      width: min(94vw, 680px);
+      min-height: unset;
+      border-radius: 22px;
+    }
+
+    .story-media {
+      min-height: 230px;
+      padding: 16px 16px 8px;
+    }
+
+    .story-media img {
+      width: 100%;
+      height: 220px;
+    }
+
+    .story-head {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .story-body h3 {
+      font-size: 1.65rem;
+    }
+
+    .story-scroll {
+      height: 186px;
+    }
+
+    .vm-bar {
+      grid-template-columns: 34px 1fr;
+      border-radius: 18px;
+    }
+  }
+</style>
+
+<script is:inline>
+  (() => {
+    const bindStoryTopButtons = () => {
+      document.querySelectorAll('[data-story-wrap]').forEach((wrap) => {
+        const scroller = wrap.querySelector('[data-story-scroll]');
+        const button = wrap.querySelector('[data-story-top-btn]');
+        if (!scroller || !button || scroller.dataset.bound === 'true') return;
+
+        const toggleButton = () => {
+          button.hidden = scroller.scrollTop < 28;
+        };
+
+        scroller.addEventListener('scroll', toggleButton, { passive: true });
+        button.addEventListener('click', () => {
+          scroller.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        scroller.dataset.bound = 'true';
+        toggleButton();
+      });
+    };
+
+    document.addEventListener('astro:page-load', bindStoryTopButtons);
+    bindStoryTopButtons();
+  })();
+</script>

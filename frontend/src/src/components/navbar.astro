@@ -1,0 +1,235 @@
+---
+import logoIcon from '../assets/logo icon hi.png?url';
+import logoImage from '../assets/logo.png?url';
+
+const { active = "home" } = Astro.props;
+
+const navItems = [
+  { id: "home",    href: "/",        label: "Home",    icon: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>` },
+  { id: "about",   href: "/about",   label: "About",   icon: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>` },
+  { id: "pricing", href: "/pricing", label: "Pricing", icon: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M11.8 10.9c-2.27-.59-3-1.2-3-2.15 0-1.09 1.01-1.85 2.7-1.85 1.78 0 2.44.85 2.5 2.1h2.21c-.07-1.72-1.12-3.3-3.21-3.81V3h-3v2.16c-1.94.42-3.5 1.68-3.5 3.61 0 2.31 1.91 3.46 4.7 4.13 2.5.6 3 1.48 3 2.41 0 .69-.49 1.79-2.7 1.79-2.06 0-2.87-.92-2.98-2.1h-2.2c.12 2.19 1.76 3.42 3.68 3.83V21h3v-2.15c1.95-.37 3.5-1.5 3.5-3.55 0-2.84-2.43-3.81-4.7-4.4z"/></svg>` },
+  { id: "support", href: "/support", label: "Support", icon: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H8c0-2.21 1.79-4 4-4s4 1.79 4 4c0 .88-.36 1.68-.93 2.25z"/></svg>` },
+
+];
+---
+
+<header class="absolute top-0 left-0 w-full flex justify-center items-center px-6 sm:px-12 pt-10 pb-8 z-[100]" transition:persist="navbar">
+  <!-- Logo Section: Absolutely positioned on desktop, tighter gap -->
+  <a 
+    href="/" 
+    class="absolute left-6 sm:left-12 flex items-center gap-0 no-underline z-[101] transition-transform hover:scale-105 max-[850px]:static mb-6 min-[851px]:mb-0 min-[851px]:-translate-y-1"
+  >
+    <!-- Logo Icon -->
+    <img src={logoIcon} alt="Icon" class="w-16 sm:w-20 h-auto" />
+    
+    <!-- Logo Text Image: Higher size, better baseline -->
+    <img src={logoImage} alt="WorkGlobal" class="h-12 sm:h-16 w-auto translate-y-2 hidden sm:block -ml-2 sm:-ml-3" />
+  </a>
+
+  <!-- Navigation Pill: Centered -->
+  <nav class="wg-nav flex justify-center" aria-label="Main navigation">
+    <ul class="wg-pill list-none m-0 px-[10px] flex items-center bg-[#053F5C] rounded-full relative overflow-visible shadow-lg h-[60px]">
+      {navItems.map((item) => (
+        <li
+          class={`wg-item group relative flex items-center justify-center w-[62px] h-[60px] list-none isolation-auto${active === item.id ? " wg-active" : ""}`}
+          data-id={item.id}
+          data-href={item.href}
+        >
+          <span class="wg-blob absolute top-1/2 left-1/2 rounded-full bg-[#AED6F1] -translate-x-1/2 -translate-y-1/2 scale-0 z-[1] pointer-events-none"></span>
+          <a 
+            href={item.href} 
+            class="wg-link relative z-[10] flex items-center justify-center w-12 h-12 rounded-full no-underline text-white/80 transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)]" 
+            aria-label={item.label} 
+            aria-current={active === item.id ? "page" : undefined}
+          >
+            <span class="wg-icon flex items-center justify-center pointer-events-none" set:html={item.icon} />
+          </a>
+          <span class="wg-tip absolute -bottom-10 left-1/2 -translate-x-1/2 scale-75 bg-[#053F5C] text-white text-[11px] font-bold whitespace-nowrap px-3 py-1 rounded-full pointer-events-none opacity-0 transition-all duration-300 group-hover:opacity-100 group-hover:scale-100 group-hover:-translate-y-2 z-50 shadow-sm">
+            {item.label}
+          </span>
+        </li>
+      ))}
+    </ul>
+  </nav>
+</header>
+
+<style is:global>
+  /* 
+    Liquid Logic Styling - Smooth Fluid Animations
+  */
+  .wg-pill {
+    --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+    --ease-elastic: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    --duration-slow: 0.6s;
+    --duration-medium: 0.5s;
+    --lift: 30px;
+    --bd: 68px;
+  }
+
+  .wg-blob {
+    width: var(--bd);
+    height: var(--bd);
+    transition: transform var(--duration-slow) var(--ease-smooth);
+    will-change: transform;
+    opacity: 0;
+  }
+
+  .wg-item.wg-active .wg-blob {
+    transform: translate(-50%, calc(-50% - var(--lift))) scale(1);
+    opacity: 1;
+  }
+
+  .wg-link {
+    transition: transform var(--duration-slow) var(--ease-smooth), 
+                color 0.4s ease-out;
+    will-change: transform;
+  }
+
+  .wg-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform var(--duration-medium) var(--ease-elastic);
+  }
+
+  .wg-icon svg {
+    width: 24px !important;
+    height: 24px !important;
+    fill: currentColor !important;
+    display: block;
+    transition: all var(--duration-medium) var(--ease-smooth);
+  }
+
+  /* Active State - Smooth Lift with Fluid Motion */
+  .wg-item.wg-active .wg-link {
+    color: #053F5C !important;
+    transform: translateY(calc(-1 * var(--lift)));
+  }
+
+  .wg-item.wg-active .wg-icon {
+    transform: scale(1.2);
+  }
+
+  /* Hover State - Gentle Scale */
+  .wg-item:not(.wg-active):hover .wg-icon {
+    transform: scale(1.05);
+  }
+
+  .wg-item:not(.wg-active):hover .wg-icon svg {
+    transform: scale(1.05);
+  }
+
+  /* Smooth entrance for icons when page loads */
+  .wg-item {
+    transition: none;
+  }
+
+  .wg-icon svg {
+    transition: transform 0.5s var(--ease-smooth), 
+                filter 0.3s ease-out;
+  }
+
+  /* Prevent layout shifts */
+  .wg-link,
+  .wg-blob,
+  .wg-icon {
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+  }
+
+  @media (max-width: 600px) {
+    .wg-pill { 
+      --bd: 60px; 
+      --lift: 26px; 
+    }
+    
+    .wg-item.wg-active .wg-icon {
+      transform: scale(1.15);
+    }
+  }
+
+  /* Remove any glow or pulse animations */
+  .wg-item.wg-active .wg-blob {
+    animation: none;
+  }
+</style>
+
+<script is:inline>
+  // Smooth navigation with fluid transitions
+  function syncNavState() {
+    const items = document.querySelectorAll('.wg-item');
+    const path = window.location.pathname;
+    let activeId = 'home';
+    
+    // Precise matching
+    if (path === '/') activeId = 'home';
+    else if (path.startsWith('/about')) activeId = 'about';
+    else if (path.startsWith('/pricing')) activeId = 'pricing';
+    else if (path.startsWith('/support')) activeId = 'support';
+    
+    items.forEach(item => {
+      const itemId = item.getAttribute('data-id');
+      if (itemId === activeId) {
+        item.classList.add('wg-active');
+      } else {
+        item.classList.remove('wg-active');
+      }
+    });
+  }
+
+  // Handle clicks with smooth visual feedback
+  function handleNavClick(e) {
+    const link = e.currentTarget.querySelector('a');
+    if (!link || link.hasAttribute('target')) return;
+    
+    e.preventDefault();
+    const href = link.getAttribute('href');
+    const item = e.currentTarget;
+    
+    // Remove active from all items
+    const allItems = document.querySelectorAll('.wg-item');
+    allItems.forEach(i => i.classList.remove('wg-active'));
+    
+    // Add active to clicked item with smooth animation
+    item.classList.add('wg-active');
+    
+    // Wait for the smooth transition to complete before navigating
+    // Using 600ms to match the slow transition duration
+    setTimeout(() => {
+      window.location.href = href;
+    }, 600);
+  }
+
+  function setupNavInteraction() {
+    const items = document.querySelectorAll('.wg-item');
+    items.forEach(item => {
+      // Remove existing listeners
+      item.removeEventListener('click', handleNavClick);
+      item.addEventListener('click', handleNavClick);
+    });
+  }
+  
+  // Initialize with slight delay for smooth initial load
+  function initialize() {
+    syncNavState();
+    setupNavInteraction();
+  }
+  
+  // Listen for Astro navigation events
+  document.addEventListener('astro:page-load', () => {
+    syncNavState();
+    setupNavInteraction();
+  });
+  
+  document.addEventListener('astro:after-swap', () => {
+    syncNavState();
+    setupNavInteraction();
+  });
+  
+  // Initial setup
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initialize);
+  } else {
+    initialize();
+  }
+</script>

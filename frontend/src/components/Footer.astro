@@ -1,0 +1,119 @@
+---
+import footerBg from '../assets/footer.png?url';
+import whitelogo from '../assets/whitelogo.png?url';
+
+const footerColumns = [
+      {
+        title: 'Organisation',
+        links: [
+          { label: 'Recruiter Hub', href: '/about' },
+          { label: 'Employer Branding', href: '/about' },
+          { label: 'Pricing', href: '/pricing-organization' },
+          { label: 'Enterprise Solutions', href: '/pricing-organization' },
+        ],
+      },
+  {
+    title: 'Job Seekers',
+    links: [
+      { label: 'Job Directory', href: '/about' },
+      { label: 'Pricing', href: '/pricing-job-seeker' },
+      { label: 'Success Stories', href: '/success-stories' },
+      { label: 'Talent Network', href: '/about' },
+    ],
+  },
+  {
+    title: 'Resources',
+    links: [
+      { label: 'Support Center', href: '/support' },
+      { label: 'FAQ', href: '/support' },
+      { label: 'Blog', href: '/about' },
+      { label: 'Press', href: '/about' },
+    ],
+  },
+  {
+    title: 'Legal',
+    links: [
+      { label: 'Term & Conditions', href: '/legal' },
+      { label: 'Privacy Policy', href: '/privacy' },
+      { label: 'Security', href: '/legal' },
+      { label: 'Manage Cookies', href: '/legal' },
+    ],
+  },
+];
+---
+
+<footer 
+  class="wg-footer relative w-full text-white bg-cover bg-top overflow-hidden"
+  style={{backgroundImage: `url(${footerBg})`}}
+>
+  <div class="max-w-[1240px] mx-auto px-6 sm:px-8 pt-16 sm:pt-20 lg:pt-24 pb-5 sm:pb-6">
+    <div class="wg-footer-main mt-12 grid grid-cols-1 md:grid-cols-[240px_1fr] lg:grid-cols-[220px_1fr] gap-10 lg:gap-12 items-start">
+      <div class="flex items-start justify-center md:justify-start">
+        <img
+          src={whitelogo}
+          alt="WorkGlobal - Swipe. Match. Work"
+          class="w-[195px] sm:w-[215px] h-auto object-contain"
+        />
+      </div>
+
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-8">
+        {footerColumns.map((column) => (
+          <nav aria-label={column.title}>
+            <h3 class="wg-footer-title">{column.title}</h3>
+            <ul class="mt-3 space-y-2.5">
+              {column.links.map((link) => (
+                <li>
+                  <a href={link.href} class="wg-footer-link">{link.label}</a>
+                </li>
+              ))}
+            </ul>
+          </nav>
+        ))}
+      </div>
+    </div>
+
+    <div class="mt-9 border-t border-white/20 pt-4 text-center">
+      <p class="text-[13px] text-white/80">© 2026 WorkGlobal. All rights reserved.</p>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .wg-footer-title {
+    font-size: 0.87rem;
+    font-weight: 800;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.88);
+    padding-bottom: 0.55rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.18);
+  }
+
+  .wg-footer-link {
+    font-size: 1.02rem;
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.92);
+    line-height: 1.2;
+    transition: color 0.2s ease;
+  }
+
+  .wg-footer-link:hover,
+  .wg-footer-link:focus-visible {
+    color: #9fd5f8;
+  }
+
+  @media (max-width: 767px) {
+    .wg-footer-main {
+      margin-top: 7.5rem;
+    }
+
+    .wg-footer-title {
+      font-size: 0.8rem;
+    }
+
+    .wg-footer-link {
+      font-size: 0.96rem;
+    }
+  }
+
+</style>

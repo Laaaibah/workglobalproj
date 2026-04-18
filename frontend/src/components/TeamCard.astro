@@ -1,0 +1,58 @@
+---
+// TeamCard.astro — reusable team member card
+interface Props {
+  name: string;
+  image?: string;
+}
+
+const { name, image } = Astro.props;
+---
+
+<div class="team-card">
+  <div class="avatar-wrap">
+    {image
+      ? <img src={image} alt={name} class="avatar-img" />
+      : <div class="avatar-placeholder"></div>
+    }
+  </div>
+</div>
+
+<style>
+  .team-card {
+    border-radius: 12px;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    box-shadow: 0 4px 20px rgba(5, 63, 92, 0.12);
+    overflow: hidden;
+    background: transparent;
+    transition: all 0.3s ease;
+  }
+  .avatar-wrap {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+  }
+
+  .avatar-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    background: transparent;
+  }
+
+  .avatar-placeholder {
+    width: 100%;
+    height: 100%;
+    border-radius: 12px;
+    background: linear-gradient(90deg, #DFF6FF 0%, #CFEFFE 100%);
+    display: block;
+  }
+</style>
